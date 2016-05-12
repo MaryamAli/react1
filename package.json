@@ -37,9 +37,13 @@
   },
   "dependencies": {
     "font-awesome": "^4.4.0",
+    "graceful-fs": "^4.1.4",
     "jquery": "^2.1.4",
+    "lodash": "^4.12.0",
     "moment": "^2.10.6",
     "normalize.css": "^3.0.3",
+    "pug": "^0.1.0",
+    "react-tools": "^0.13.3",
     "underscore": "^1.8.3"
   }
 }
