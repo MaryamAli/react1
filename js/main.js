@@ -2,4 +2,6 @@ import $ from 'jquery';
 import _ from 'underscore';
 import moment from 'moment';
 
-console.log('Hello, World');
+import './ajax_setup';
+
+console.log('Hello, from main.js');
