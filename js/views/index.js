@@ -1,5 +1,7 @@
 import Gallery from './gallery';
+import PhotoPost from './photopost';
 
 export {
-  Gallery
+  Gallery,
+  PhotoPost
 };

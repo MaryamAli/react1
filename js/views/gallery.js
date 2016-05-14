@@ -2,10 +2,14 @@ import React from 'react';
 
 export default React.createClass({
 
+  viewPhoto(id) {
+    this.props.onClick(id);
+  },
+
   processData(data) {
     return (
         <div key={data.objectId}>
-          <img src={data.photo}/>
+          <img id={data.objectId} onClick={() => this.viewPhoto(data.objectId)} src={data.photo}/>
         </div>
       );
   },
