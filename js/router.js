@@ -9,12 +9,17 @@ import {Photo as PhotoModel} from './resources';
 import {Gallery as GalleryView} from './views';
 import {PhotoPost as PhotoView} from './views';
 
+import {AddPost} from './views';
+import {EditPost} from './views';
+
 export default Backbone.Router.extend({
 
   routes: {
     ""              : "redirectToGallery",
     "gallery"       : "showGallery",
-    "photopost/:id" : "showPost"
+    "photopost/:id" : "showPost",
+    "addphoto"      : "addForm",
+    "editphoto"     : "editForm"
   },
 
   initialize(appElement) {
@@ -43,8 +48,13 @@ export default Backbone.Router.extend({
   showGallery() {
     // console.log(this);
     this.collection.fetch().then( ()=> {
-      this.render(<GalleryView id={this.collection.objectId} onClick={(id) =>this.goto(`photopost/` + id)} images={this.collection.toJSON()}/>);
-
+      this.render(<GalleryView 
+        id={this.collection.objectId} 
+        onAddClick={() => this.goto('addphoto')} 
+        onClick={(id) =>this.goto('photopost/' + id)} 
+        onEditClick={() => this.goto('editphoto')}
+        onHomeClick={() => this.goto('')}
+        images={this.collection.toJSON()}/>);
     });
   },
 
@@ -54,15 +64,42 @@ export default Backbone.Router.extend({
 
     if(photoPost) {
       console.log(photoPost);
-      this.render(<PhotoView images={photoPost.toJSON()}/>);
+      this.render(<PhotoView 
+        images={photoPost.toJSON()}
+        onEditClick={()=> this.goto('editphoto')}
+        onAddClick={() => this.goto('addphoto')}
+        onHomeClick={()=> this.goto('')}/>);
     } else {
       console.log(this.picId + 'added');
       photoPost = this.collection.add(id);
       photoPost.fetch().then( ()=>{
-        this.render(<PhotoView images={photoPost.toJSON()}/>);
+        this.render(<PhotoView 
+          images={photoPost.toJSON()}
+          onEditClick={()=> this.goto('editphoto')}
+          onAddClick={() => this.goto('addphoto')}
+          onHomeClick={()=> this.goto('')}/>);
       });
     }
 
+  },
+
+  addForm() {
+    console.log('addphoto goes here');
+    this.render(<AddPost
+      images={this.collection.toJSON()}
+      onEditClick={()=> this.goto('editphoto')}
+      onAddClick={() => this.goto('addphoto')}
+      onHomeClick={()=> this.goto('')}/>);
+
+  },
+
+  editForm() {
+    console.log('edit form goes here');
+    this.render(<EditPost
+      images={this.collection.toJSON()}
+      onEditClick={()=> this.goto('editphoto')}
+      onAddClick={() => this.goto('addphoto')}
+      onHomeClick={()=> this.goto('')}/>);
   }
 });
 
