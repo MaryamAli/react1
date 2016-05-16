@@ -28,7 +28,7 @@ export default React.createClass({
         </div>
         <div className="image-view" id={this.props.image.id}>
           <img src={this.props.images.photo}/>
-          <p>{this.props.images.caption}</p>
+          <p><span className="username">{this.props.images.caption}</span>{this.props.images.caption}</p>
         </div>
       </div>
     );

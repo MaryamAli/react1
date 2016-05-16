@@ -11,10 +11,6 @@ export default React.createClass({
     this.props.onHomeClick();
   },
 
-  editFormView() {
-    console.log('edit button clicked');
-    this.props.onEditClick();
-  },
 
   addFormView() {
     console.log('button click working');
@@ -37,7 +33,6 @@ export default React.createClass({
             <img src="http://lorempixel.com/400/200/"/>
             <button onClick={() => this.goHomeView()}>Home</button>
             <button onClick={() =>this.addFormView()}>Add</button>
-            <button onClick={() => this.editFormView()}>Edit</button>
           </div>
           <div className="gallery-images">{this.props.images.map(this.processData)}</div>
         </div>

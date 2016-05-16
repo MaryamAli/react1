@@ -2,6 +2,29 @@ import React from 'react';
 
 export default React.createClass({
 
+  getInitialState() {
+    return({
+      objectId : this.props.stored.objectId,
+      photo : this.props.stored.photo,
+      caption : this.props.stored.caption
+    });
+  },
+
+  setId(event){
+    let newId = event.currentTarget.value;
+    this.setState({objectId : newId});
+  },
+
+  updatePhoto(event) {
+    let newPhoto = event.currentTarget.value;
+    this.setState({photo: newPhoto});
+  },
+
+  updateCaption(event) {
+    let newCaption = event.currentTarget.value;
+    this.setState({caption : newCaption});
+  },
+
   goHomeView() {
     console.log('home button clicked');
     this.props.onHomeClick();
@@ -12,9 +35,9 @@ export default React.createClass({
     this.props.onAddClick();
   },
 
-  editFormView() {
-    console.log('edit button clicked');
-    this.props.onEditClick();
+  addChanges() {
+    console.log('edits added');
+    this.props.onSubmitEditClick();
   },
 
   render() {
@@ -24,13 +47,16 @@ export default React.createClass({
         <div className="header">
           <img src="http://lorempixel.com/400/200/sports/Dummy-Text/"/>
           <button onClick={() => this.goHomeView()}>Home</button>
-          <button onClick={() => this.addFormView()}>Add</button>
+          <button onClick={() => this.goBackView()}>Back</button>
           <button onClick={() => this.editFormView()}>Edit</button>
         </div>
-        <div className="new-post">
+        <div className="edit-post">
+          <h4>Edit/Change</h4>
           <form>
-            <label>Image URL: <input type="text" className="photo"/></label>
-            <label><input type="text" className="caption"/></label>
+            <label>Id: <input onChange = {this.setId} type="text" className="id"  value={this.state.objectId}/></label>
+            <label>Image URL: <input onChange={this.updatePhoto} type="text" className="photo" value={this.state.photo}/></label>
+            <label>Caption: <input onChange={this.updateCaption} type="text" className="caption" value={this.state.caption}/></label>
+            <button onClick={() => this.addChanges()}>Submit Edit</button>
           </form>
         </div>
       </div>

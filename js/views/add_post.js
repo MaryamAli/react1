@@ -12,9 +12,9 @@ export default React.createClass({
     this.props.onAddClick();
   },
 
-  editFormView() {
-    console.log('edit button clicked');
-    this.props.onEditClick();
+  addNewPost() {
+    console.log('new post from add new post');
+    this.props.onSubmitClick();
   },
 
   render() {
@@ -25,12 +25,12 @@ export default React.createClass({
           <img src="http://lorempixel.com/400/200/sports/1/Dummy-Text/"/>
           <button onClick={() => this.goHomeView()}>Home</button>
           <button onClick={() => this.addFormView()}>Add</button>
-          <button onClick={() => this.editFormView()}>Edit</button>
         </div>
         <div className="new-post">
           <form>
             <label>Image URL: <input type="text" className="photo"/></label>
-            <label><input type="text" className="caption"/></label>
+            <label>Caption: <input type="text" className="caption"/></label>
+            <button onClick={() => this.addNewPost()}>Submit</button>
           </form>
         </div>
       </div>
