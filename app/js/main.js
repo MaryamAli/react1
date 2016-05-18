@@ -226,7 +226,7 @@ exports['default'] = _backbone2['default'].Router.extend({
         } }));
     } else {
       console.log(this.picId + 'added');
-      photoPost = this.collection.add(id);
+      photoPost = this.collection.add({ objectId: id });
       photoPost.fetch().then(function () {
         _this2.render(_react2['default'].createElement(_views.PhotoPost, {
           images: photoPost.toJSON(),
@@ -259,11 +259,12 @@ exports['default'] = _backbone2['default'].Router.extend({
       onSubmitClick: function () {
         var newPhoto = document.querySelector('.photo').value;
         var newCaption = document.querySelector('.caption').value;
+        var newUser = document.querySelector('.user').value;
         var instaModel = new _resources.Photo({
           photo: newPhoto,
-          caption: newCaption
+          caption: newCaption,
+          user: newUser
         });
-        _this3.collection.add(instaModel);
         instaModel.save().then(function () {
           alert('Saved');
           _this3.goto('');
@@ -276,10 +277,11 @@ exports['default'] = _backbone2['default'].Router.extend({
 
     console.log('edit form goes here');
     this.spinner();
-    var editId = this.collection.get(id);
+    var getId = this.collection.get(id);
+    console.log(getId);
     this.render(_react2['default'].createElement(_views.EditPost, {
-      stored: editId.toJSON(),
-      images: this.colletion.toJSON(),
+      images: this.collection.toJSON(),
+      stored: getId.toJSON(),
       onAddClick: function () {
         return _this4.goto('addphoto');
       },
@@ -289,19 +291,22 @@ exports['default'] = _backbone2['default'].Router.extend({
       onBackClick: function () {
         return _this4.goto('photopost/' + id);
       },
-      onSubmitEditClick: function () {
-        id = document.querySelector('.id').value;
-        var changedPhoto = document.querySelector('.photo').value;
-        var changedCaption = document.querySelector('.caption').value;
-        _this4.collection.save({
-          objectId: stored.objectId,
-          photo: changedPhoto,
-          caption: changedCaption
-        }).then(function () {
-          alert('Edit saved');
-          _this4.goto('');
-        });
+      onSubmitEditClick: function (id, url, caption) {
+        _this4.saveEdit(id, url, caption);
       } }));
+  },
+
+  saveEdit: function saveEdit(id, url, caption) {
+    var _this5 = this;
+
+    this.collection.get(id).save({
+      objectId: id,
+      photo: url,
+      caption: caption
+    }).then(function () {
+      alert('Edit saved');
+      _this5.goto('');
+    });
   }
 });
 module.exports = exports['default'];
@@ -327,11 +332,6 @@ exports['default'] = _react2['default'].createClass({
     this.props.onHomeClick();
   },
 
-  addFormView: function addFormView() {
-    console.log('add button clicked');
-    this.props.onAddClick();
-  },
-
   addNewPost: function addNewPost() {
     console.log('new post from add new post');
     this.props.onSubmitClick();
@@ -354,13 +354,6 @@ exports['default'] = _react2['default'].createClass({
               return _this.goHomeView();
             } },
           'Home'
-        ),
-        _react2['default'].createElement(
-          'button',
-          { onClick: function () {
-              return _this.addFormView();
-            } },
-          'Add'
         )
       ),
       _react2['default'].createElement(
@@ -369,6 +362,12 @@ exports['default'] = _react2['default'].createClass({
         _react2['default'].createElement(
           'form',
           null,
+          _react2['default'].createElement(
+            'label',
+            null,
+            'User: ',
+            _react2['default'].createElement('input', { type: 'text', className: 'user' })
+          ),
           _react2['default'].createElement(
             'label',
             null,
@@ -383,9 +382,7 @@ exports['default'] = _react2['default'].createClass({
           ),
           _react2['default'].createElement(
             'button',
-            { onClick: function () {
-                return _this.addNewPost();
-              } },
+            { onClick: this.addNewPost },
             'Submit'
           )
         )
@@ -444,9 +441,10 @@ exports['default'] = _react2['default'].createClass({
     this.props.onAddClick();
   },
 
-  addChanges: function addChanges() {
+  addChanges: function addChanges(event) {
     console.log('edits added');
-    this.props.onSubmitEditClick();
+    even.preventDefault();
+    this.props.onSubmitEditClick(this.state.objectId, this.state.photo, this.state.caption);
   },
 
   render: function render() {
@@ -479,6 +477,11 @@ exports['default'] = _react2['default'].createClass({
           { onClick: function () {
               return _this.editFormView();
             } },
+          'Edit'
+        ),
+        _react2['default'].createElement(
+          'button',
+          { onClick: this.addChanges },
           'Edit'
         )
       ),
@@ -513,9 +516,7 @@ exports['default'] = _react2['default'].createClass({
           ),
           _react2['default'].createElement(
             'button',
-            { onClick: function () {
-                return _this.addChanges();
-              } },
+            { onClick: this.addChanges },
             'Submit Edit'
           )
         )
@@ -588,9 +589,7 @@ exports['default'] = _react2['default'].createClass({
           ),
           _react2['default'].createElement(
             'button',
-            { onClick: function () {
-                return _this2.addFormView();
-              } },
+            { onClick: this.addFormView },
             'Add'
           )
         ),
@@ -690,9 +689,7 @@ exports['default'] = _react2['default'].createClass({
         ),
         _react2['default'].createElement(
           'button',
-          { onClick: function () {
-              return _this.addFormView();
-            } },
+          { onClick: this.addFormView },
           'Add'
         ),
         _react2['default'].createElement(
@@ -705,7 +702,7 @@ exports['default'] = _react2['default'].createClass({
       ),
       _react2['default'].createElement(
         'div',
-        { className: 'image-view', id: this.props.image.id },
+        { className: 'image-view', id: this.props.images.id },
         _react2['default'].createElement('img', { src: this.props.images.photo }),
         _react2['default'].createElement(
           'p',

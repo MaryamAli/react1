@@ -78,7 +78,7 @@ export default Backbone.Router.extend({
         onHomeClick={()=> this.goto('')}/>);
     } else {
       console.log(this.picId + 'added');
-      photoPost = this.collection.add(id);
+      photoPost = this.collection.add({objectId: id});
       photoPost.fetch().then( ()=>{
         this.render(<PhotoView 
           images={photoPost.toJSON()}
@@ -100,11 +100,12 @@ export default Backbone.Router.extend({
       onSubmitClick={() => {
         let newPhoto = document.querySelector('.photo').value;
         let newCaption = document.querySelector('.caption').value;
+        let newUser = document.querySelector('.user').value;
         let instaModel = new PhotoModel({
-          photo : newPhoto,
-          caption : newCaption
+          photo   : newPhoto,
+          caption : newCaption,
+          user    : newUser
         });
-        this.collection.add(instaModel);
         instaModel.save().then(() => {
           alert('Saved');
           this.goto('');
@@ -117,27 +118,29 @@ export default Backbone.Router.extend({
   editForm(id) {
     console.log('edit form goes here');
     this.spinner();
-    let editId = this.collection.get(id);
+    let getId = this.collection.get(id);
+    console.log(getId);
     this.render(<EditPost
-      stored={editId.toJSON()}
-      images={this.colletion.toJSON()}
+      images={this.collection.toJSON()}
+      stored = {getId.toJSON()}
       onAddClick={() => this.goto('addphoto')}
       onHomeClick={()=> this.goto('')}
       onBackClick={() => this.goto('photopost/' + id)}
-      onSubmitEditClick={() => {
-        id = document.querySelector('.id').value;
-        let changedPhoto = document.querySelector('.photo').value;
-        let changedCaption = document.querySelector('.caption').value;
-        this.collection.save({
-          objectId : stored.objectId,
-          photo : changedPhoto,
-          caption : changedCaption
-        }).then(() => {
-          alert('Edit saved');
-          this.goto('');
-        });
-      }}/>
+      onSubmitEditClick={(id, url, caption) => {
+      this.saveEdit(id, url, caption);}}/>
     );
-  }
+  },
+
+  saveEdit(id, url, caption) {
+    this.collection.get(id).save({
+      objectId : id,
+      photo : url,
+      caption : caption
+    }).then(() => {
+      alert('Edit saved');
+      this.goto('');
+    });
+  }      
 });
+
 

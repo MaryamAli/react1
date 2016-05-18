@@ -32,7 +32,7 @@ export default React.createClass({
           <div id={this.props.images.id} className="header">
             <img src="http://lorempixel.com/400/200/"/>
             <button onClick={() => this.goHomeView()}>Home</button>
-            <button onClick={() =>this.addFormView()}>Add</button>
+            <button onClick={this.addFormView}>Add</button>
           </div>
           <div className="gallery-images">{this.props.images.map(this.processData)}</div>
         </div>

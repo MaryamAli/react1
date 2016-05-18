@@ -23,10 +23,10 @@ export default React.createClass({
         <div className="header">
             <img src="http://lorempixel.com/400/200/"/>
             <button onClick={() => this.goHomeView()}>Home</button>
-            <button onClick={() =>this.addFormView()}>Add</button>
+            <button onClick={this.addFormView}>Add</button>
             <button onClick={() => this.editFormView()}>Edit</button>
         </div>
-        <div className="image-view" id={this.props.image.id}>
+        <div className="image-view" id={this.props.images.id}>
           <img src={this.props.images.photo}/>
           <p><span className="username">{this.props.images.caption}</span>{this.props.images.caption}</p>
         </div>
