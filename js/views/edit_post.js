@@ -54,7 +54,7 @@ export default React.createClass({
           <button onClick={() => this.goHomeView()}>Home</button>
           <button onClick={() => this.goBackView()}>Back</button>
           <button onClick={() => this.editFormView()}>Edit</button>
-          <button onClick={this.addChanges}>Edit</button>
+          <button onClick={this.addChanges}>This is the add button</button>
         </div>
         <div className="edit-post">
           <h4>Edit/Change</h4>
@@ -62,7 +62,7 @@ export default React.createClass({
             <label>Id: <input onChange = {this.setId} type="text" className="id"  value={this.state.objectId}/></label>
             <label>Image URL: <input onChange={this.updatePhoto} type="text" className="photo" value={this.state.photo}/></label>
             <label>Caption: <input onChange={this.updateCaption} type="text" className="caption" value={this.state.caption}/></label>
-            <button onClick={this.addChanges}>Submit Edit</button>
+            <button onClick={this.addChanges}>Submit Edit this is the add button</button>
           </form>
         </div>
       </div>
