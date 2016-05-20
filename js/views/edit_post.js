@@ -53,6 +53,7 @@ export default React.createClass({
           <img src="http://lorempixel.com/400/200/sports/Dummy-Text/"/>
           <button onClick={() => this.goHomeView()}>Home</button>
           <button onClick={() => this.goBackView()}>Back</button>
+          //EXTRA BUTTON 
           <button onClick={() => this.editFormView()}>Edit</button>
           <button onClick={this.addChanges}>This is the add button</button>
         </div>
