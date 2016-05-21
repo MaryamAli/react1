@@ -25,6 +25,7 @@ export default React.createClass({
             <button onClick={() => this.goHomeView()}>Home</button>
             <button onClick={this.addFormView}>Add</button>
             <button onClick={() => this.editFormView()}>Edit</button>
+            <button onClick={() => this.addChanges()}>Add Changes/Add Button</button>
         </div>
         <div className="image-view" id={this.props.images.id}>
           <img src={this.props.images.photo}/>
