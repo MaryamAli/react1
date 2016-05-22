@@ -13,7 +13,7 @@ export default React.createClass({
 
 
   addFormView() {
-    console.log('button click working');
+    console.log('button click working from addForm');
     this.props.onAddClick();
   },
 
@@ -28,7 +28,7 @@ export default React.createClass({
   render() {
     return (
         // <div className="gallery-images">{this.props.images.map(this.processData)}</div>
-        <div>
+        <div className="gallery-header">
           <div id={this.props.images.id} className="header">
             <img src="http://lorempixel.com/400/200/"/>
             <button onClick={() => this.goHomeView()}>Home</button>
