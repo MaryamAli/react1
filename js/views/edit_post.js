@@ -58,7 +58,7 @@ export default React.createClass({
           <button onClick={this.addChanges}>This is the add button</button>
         </div>
         <div className="edit-post">
-          <h4>Edit/Change</h4>
+          <h4 className="header">Edit/Change</h4>
           <form>
             <label>Id: <input onChange = {this.setId} type="text" className="id"  value={this.state.objectId}/></label>
             <label>Image URL: <input onChange={this.updatePhoto} type="text" className="photo" value={this.state.photo}/></label>
